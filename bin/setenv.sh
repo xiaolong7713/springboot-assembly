@@ -27,7 +27,7 @@ export JAVA_OPTS="$JAVA_OPTS -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabl
 # only for jdk 1.7
 #export JAVA_OPTS="$JAVA_OPTS -XX:MaxPermSize="256m
 
-# java agent path must be /injoy/server/apache-skywalking-apm-bin/agent
+# java agent path must be /home/server/apache-skywalking-apm-bin/agent
 if [ -d "/home/server/apache-skywalking-apm-bin/agent" ]
 then
    export JAVA_OPTS="$JAVA_OPTS -javaagent:/home/server/apache-skywalking-apm-bin/agent/skywalking-agent.jar=agent.service_name=$APPLICATION_NAME,logging.level=info"
