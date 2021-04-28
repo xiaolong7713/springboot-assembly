@@ -35,16 +35,15 @@
             </includes>
         </fileSet>
 
-        <!-- 指定输出target/classes中的配置文件到config目录中 -->
-        <fileSet>
-            <outputDirectory>logs</outputDirectory>
-            <fileMode>0644</fileMode>
-            <excludes>
-                <exclude>**/*</exclude>
-            </excludes>
-        </fileSet>
+<!--        <fileSet>-->
+<!--            <outputDirectory>logs</outputDirectory>-->
+<!--            <fileMode>0644</fileMode>-->
+<!--            <excludes>-->
+<!--                <exclude>**/*</exclude>-->
+<!--            </excludes>-->
+<!--        </fileSet>-->
 
-        <!-- 将第三方依赖打包到lib目录中 -->
+        <!-- 将dependencies打包到lib目录中 -->
         <fileSet>
             <directory>${build.directory}</directory>
             <outputDirectory>lib</outputDirectory>
@@ -54,15 +53,14 @@
             </includes>
         </fileSet>
 
-        <!-- 将项目启动jar打包到boot目录中 -->
-        <!--        <fileSet>-->
-        <!--            <directory>${build.directory}</directory>-->
-        <!--            <outputDirectory>boot</outputDirectory>-->
-        <!--            <fileMode>0755</fileMode>-->
-        <!--            <includes>-->
-        <!--                <include>${project.build.finalName}.jar</include>-->
-        <!--            </includes>-->
-        <!--        </fileSet>-->
+        <fileSet>
+            <directory>${build.outputDirectory}</directory>
+            <outputDirectory>./</outputDirectory>
+            <fileMode>0644</fileMode>
+            <includes>
+                <include>build-info.txt</include>
+            </includes>
+        </fileSet>
 
         <!-- 包含根目录下的文件 -->
         <fileSet>
@@ -75,5 +73,4 @@
             </includes>
         </fileSet>
     </fileSets>
-
 </assembly>
