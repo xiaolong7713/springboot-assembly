@@ -1,0 +1,36 @@
+spring:
+  profiles:
+    active: ${package.environment}
+  jmx:
+    default-domain: spring-assembly-server
+  application:
+    name: spring-assembly-server
+
+#服务ID
+server:
+  port: 9090           #端口号
+  servlet:
+    context-path: /spring-assembly
+
+http:
+  #最大连接数
+  maxTotal: 200
+  #单个主机的最大连接数
+  defaultMaxPerRoute: 20
+  #连接超时默认2s
+  connectTimeout: 5000
+  #读取超时默认2s
+  readTimeout: 5000
+  #不活动失效时间
+  inactivityMillisecond: 60000
+  #测试连接是否可用
+  connectionRequestTimeout: 2000    
+  
+    
+#线程池配置
+taskExecutor.corePoolSize: 10
+taskExecutor.maxPoolSize: 300
+taskExecutor.keepAliveSeconds: 60
+taskExecutor.queueCapacity: 100
+
+greeting.message: hello

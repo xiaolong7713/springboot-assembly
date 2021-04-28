@@ -16,9 +16,19 @@ JAR_NAME=$DEPLOY_DIR_NAME-with-dependencies.jar
 
 CONF_DIR=$DEPLOY_DIR/config
 # log file
-LOG_IMPL_FILE=${logConfig}
+LOG_IMPL_FILE=""
 APPLICATION_FILE=application.yml
+# application name
+APPLICATION_NAME=""
 
+# ====================================use env ===========================================================
+INIT_ENV=""
+if [ "$1" = "--env" ]; then
+    INIT_ENV="$2"
+    if [ -n "$INIT_ENV" ]; then
+       cp $CONF_DIR/$INIT_ENV/* $CONF_DIR
+    fi
+fi
 # ====================================FIND SERVER PORT===================================================
 SERVER_PORT=""
 if [ -f "config/application.yml" ]
@@ -27,7 +37,9 @@ then
     sed -i "s/$(echo -e '\015')/\n/g" config/application.yml
     # read yml file
     eval $(YamlParse__parse "config/application.yml" "config_")
-    SERVER_PORT=$config_server_port
+    SERVER_PORT=${config_server_port%% *}
+    LOG_IMPL_FILE=${config_log_config%% *}
+	APPLICATION_NAME=${config_spring_application_name%% *}
 else
     SERVER_PORT=$(sed '/server.port/!d;s/.*=//' config/application.properties | tr -d '\r')
 fi
@@ -73,7 +85,7 @@ if [ -n "$SERVER_PORT" ]; then
     fi
 
     if [ "$SERVER_PORT_COUNT" == "" ]; then
-    	echo "starting"
+        echo "starting"
     elif [ $SERVER_PORT_COUNT -gt 0 ]; then
         echo "ERROR: The $SERVER_NAME port $SERVER_PORT already used!"
         exit 1
@@ -87,11 +99,12 @@ fi
 STDOUT_FILE=$LOGS_DIR/catalina.out
 
 LOGGING_CONFIG=""
-if [ -f "$CONF_DIR/$LOG_IMPL_FILE" ]
-then
-    LOGGING_CONFIG="-Dlogging.config=$CONF_DIR/$LOG_IMPL_FILE"
+if [ -f $CONF_DIR/$LOG_IMPL_FILE ]; then
+   LOGGING_CONFIG="-Dlogging.config=$CONF_DIR/$LOG_IMPL_FILE"
+elif [ -f $CONF_DIR/logback-spring.xml.xml ]; then
+   LOGGING_CONFIG="-Dlogging.config=$CONF_DIR/logback-spring.xml"
 fi
-
+ 
 CONFIG_FILES=" -Dlogging.path=$LOGS_DIR $LOGGING_CONFIG -Dspring.config.location=file:$CONF_DIR/ "
 
 # =================================set jvm params=======================================================
@@ -131,7 +144,7 @@ else
     JAVA_OPTS_TEMP="$JAVA_DEFAULT_OPTS $JAVA_MEM_OPTS"
 fi
 echo -e "Starting the $SERVER_NAME ..."
-nohup java $JAVA_OPTS_TEMP $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS $CONFIG_FILES -jar $DEPLOY_DIR/lib/$JAR_NAME $1 $2 >> $STDOUT_FILE 2>&1 &
+nohup java $JAVA_OPTS_TEMP $JAVA_DEBUG_OPTS $JAVA_JMX_OPTS $CONFIG_FILES -jar $DEPLOY_DIR/lib/$JAR_NAME >> $STDOUT_FILE 2>&1 &
 
 COUNT=0
 while [ "$COUNT" -lt 1 ]; do
@@ -147,6 +160,7 @@ done
 echo "OK!"
 PIDS=$(ps -ef | grep java | grep "$DEPLOY_DIR" | awk '{print $2}')
 echo "Command line argument: $JAVA_OPTS_TEMP"
+echo "CONFIG_FILES: $CONFIG_FILES"
 echo "PID: $PIDS"
 echo "PORT: $SERVER_PORT"
 echo "STDOUT: $STDOUT_FILE"

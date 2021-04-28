@@ -1,0 +1,30 @@
+spring:
+  cloud:
+    config:
+      name: xx # 配置文件前缀，对应配置中心文件的${application}部分
+      discovery:
+        enabled: true # 通过服务发现的方式去找配置中心
+        service-id: aibot-config-server # 配置中心的名字，直接配置名称可以在配置中心集群的时候实现负载均衡
+      profile: prod # 对应配置中心文件的${profile}部分
+
+eureka:
+  client: 
+    serviceUrl:
+      defaultZone: http://10.100.206.15:8761/eureka              # 注册中心地址
+  instance:
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}                           # 注册中心显示的实例名     
+    prefer-ip-address: true
+    metadata-map:
+      management:
+        context-path: /spring-assembly/actuator
+    health-check-url-path: /spring-assembly/actuator/health
+    status-page-url-path: /spring-assembly/actuator/info
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+      health:
+        show-details: ALWAYS  

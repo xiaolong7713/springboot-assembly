@@ -18,51 +18,62 @@
         -->
         <!-- 将src/bin目录下的所有文件输出到打包后的bin目录中 -->
         <fileSet>
-            <directory>${build.outputDirectory}/bin</directory>
+            <directory>${basedir}/bin</directory>
             <outputDirectory>bin</outputDirectory>
             <fileMode>0755</fileMode>
         </fileSet>
 
         <!-- 指定输出target/classes中的配置文件到config目录中 -->
         <fileSet>
-            <directory>${build.outputDirectory}/resource</directory>
+            <directory>${build.outputDirectory}</directory>
             <outputDirectory>config</outputDirectory>
             <fileMode>0644</fileMode>
+            <includes>
+                <include>*.yml</include>
+                <include>*.xml</include>
+                <include>*.properties</include>
+            </includes>
         </fileSet>
 
         <!-- 指定输出target/classes中的配置文件到config目录中 -->
         <fileSet>
-            <directory>${build.outputDirectory}/logs</directory>
             <outputDirectory>logs</outputDirectory>
             <fileMode>0644</fileMode>
+            <excludes>
+                <exclude>**/*</exclude>
+            </excludes>
         </fileSet>
 
         <!-- 将第三方依赖打包到lib目录中 -->
-<!--        <fileSet>-->
-<!--            <directory>${build.directory}/lib</directory>-->
-<!--            <outputDirectory>lib</outputDirectory>-->
-<!--            <fileMode>0755</fileMode>-->
-<!--        </fileSet>-->
+        <fileSet>
+            <directory>${build.directory}</directory>
+            <outputDirectory>lib</outputDirectory>
+            <fileMode>0755</fileMode>
+            <includes>
+                <include>*with-dependencies.jar</include>
+            </includes>
+        </fileSet>
 
         <!-- 将项目启动jar打包到boot目录中 -->
-<!--        <fileSet>-->
-<!--            <directory>${build.directory}</directory>-->
-<!--            <outputDirectory>boot</outputDirectory>-->
-<!--            <fileMode>0755</fileMode>-->
-<!--            <includes>-->
-<!--                <include>${project.build.finalName}.jar</include>-->
-<!--            </includes>-->
-<!--        </fileSet>-->
+        <!--        <fileSet>-->
+        <!--            <directory>${build.directory}</directory>-->
+        <!--            <outputDirectory>boot</outputDirectory>-->
+        <!--            <fileMode>0755</fileMode>-->
+        <!--            <includes>-->
+        <!--                <include>${project.build.finalName}.jar</include>-->
+        <!--            </includes>-->
+        <!--        </fileSet>-->
 
         <!-- 包含根目录下的文件 -->
-<!--        <fileSet>-->
-<!--            <directory>${basedir}</directory>-->
-<!--            <includes>-->
-<!--                <include>NOTICE</include>-->
-<!--                <include>LICENSE</include>-->
-<!--                <include>*.md</include>-->
-<!--            </includes>-->
-<!--        </fileSet>-->
+        <fileSet>
+            <directory>${basedir}</directory>
+            <outputDirectory>docs</outputDirectory>
+            <includes>
+                <include>NOTICE</include>
+                <include>LICENSE</include>
+                <include>*.md</include>
+            </includes>
+        </fileSet>
     </fileSets>
 
 </assembly>

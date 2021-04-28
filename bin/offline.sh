@@ -86,7 +86,7 @@ echo -e "Offline the $APP_NAME $LOCAL_IP:$SERVER_PORT ...\c"
 echo -e ".\c"
 
 # 需要sleep,等待Eruka Instance client默认30S,刷新缓存
-sleep 30s
+sleep 90s
 
 # ====================================PRINT LOG===================================================
 echo "EUREKA_URL: $EUREKA_URL"
