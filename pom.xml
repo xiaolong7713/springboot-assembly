@@ -181,8 +181,8 @@
             <!-- 开发环境 -->
             <id>dev</id>
             <properties>
-                <!--这里定义package.environment这个变量-->
-                <package.environment>dev</package.environment>
+                <!--这里定义active.profile这个变量-->
+                <active.profile>dev</active.profile>
             </properties>
             <activation>
                 <!-- 默认激活该profile节点-->
@@ -194,7 +194,7 @@
             <id>prod</id>
             <properties>
                 <!--这里定义package.environment这个变量-->
-                <package.environment>prod</package.environment>
+                <active.profile>prod</active.profile>
             </properties>
         </profile>
     </profiles>

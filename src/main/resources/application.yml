@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: ${package.environment}
+    active: ${active.profile}
   jmx:
     default-domain: spring-assembly-server
   application:
