@@ -25,7 +25,7 @@
 
         <!-- 指定输出target/classes中的配置文件到config目录中 -->
         <fileSet>
-            <directory>${build.outputDirectory}</directory>
+            <directory>${basedir}/target/classes</directory>
             <outputDirectory>config</outputDirectory>
             <fileMode>0644</fileMode>
             <includes>
@@ -35,17 +35,9 @@
             </includes>
         </fileSet>
 
-<!--        <fileSet>-->
-<!--            <outputDirectory>logs</outputDirectory>-->
-<!--            <fileMode>0644</fileMode>-->
-<!--            <excludes>-->
-<!--                <exclude>**/*</exclude>-->
-<!--            </excludes>-->
-<!--        </fileSet>-->
-
         <!-- 将dependencies打包到lib目录中 -->
         <fileSet>
-            <directory>${build.directory}</directory>
+            <directory>${basedir}/target</directory>
             <outputDirectory>lib</outputDirectory>
             <fileMode>0755</fileMode>
             <includes>
