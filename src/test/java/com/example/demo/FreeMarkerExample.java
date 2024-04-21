@@ -33,7 +33,7 @@ public class FreeMarkerExample {
             templateData.put("stu", student);
             //templateData.put("map", Map.of("name", "李四", "age", "18"));
 
-            templateData.put("map", MapValues.of("level", "name", "age").with(Level.INFO, "张三", 21));
+            templateData.put("map", Maps.of("level", "name", "age").with(Level.INFO, "张三", 21));
 
             // 加载模板文件
             Template template = cfg.getTemplate("example.ftl");

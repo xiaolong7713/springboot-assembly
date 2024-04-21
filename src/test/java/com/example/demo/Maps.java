@@ -3,12 +3,12 @@ package com.example.demo;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MapValues {
+public class Maps {
 
     private String[] keys;
 
-    public static MapValues of(String... keys) {
-        MapValues mapValues = new MapValues();
+    public static Maps of(String... keys) {
+        Maps mapValues = new Maps();
         mapValues.keys = keys;
 
         return mapValues;
@@ -22,6 +22,8 @@ public class MapValues {
         for (int i = 0, len = keys.length; i < len; i++) {
             map.put(keys[i], values[i]);
         }
+        //help gc
+        keys = null;
 
         return map;
     }
